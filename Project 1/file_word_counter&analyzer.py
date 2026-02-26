@@ -1,55 +1,51 @@
+import os
+import re
 
-#data for read from file
-file = open ('','r')
+current_dir = os.path.dirname(__file__)
+file_path = os.path.join(current_dir, "data.txt")
 
-# data read line by line 
-lines = readlines(file)
+with open(file_path, "r") as file:
+    content = file.read().lower()
+
+# Extract words
+words = re.findall(r"[A-Za-z]\w*(?:\-[A-Za-z]\w*)?", content)
 
 total_vowels = 0
-total= 0
 total_cons = 0
-largest_word = 0
+total_letters = 0
 total_words = 0
 word_freq = {}
-#split data in line 
-for line in lines :
-    
-    # remove white spaces
-    line = lines.strip()
-    
-    # split lines in words & convert in lower case 
-    words = line.split().lower()
-    for lin in line :
-        
-        #find largest word
-        if largest_word > Len(lin) :
-          largest_word = lin
-          
-    # count total words 
-    for word in words :
-        total_words += word
-        
-        #count frequency of each word
-        if word_freq in words :
-            word_freq[word] += 1
-        else :
-           word_freq[word] = 1
-          
-   #filter data in vowels & consonants 
-    vowels = 'aeiou'
-    for I in words :
-        if I in vowels :
-           total_vowels += I
-           
-        else : 
-           total_cons += I
+largest_word = ""
 
-file.close()
+vowels = "aeiou"
 
-print("total letters:",total)
-print("total wors:",total_words)
-print("Largest wors:", largest_word)
-print("total Consonants:",total_cons)
-print("total Vowels:",total_vowels)
-print("Words frequency:",word_freq)
+for word in words:
+    
+    total_words += 1
+    
+    # Largest word
+    if len(word) > len(largest_word):
+        largest_word = word
+    
+    # Word frequency
+    if word in word_freq:
+        word_freq[word] += 1
+    else:
+        word_freq[word] = 1
+    
+    # Letters count
+    for char in word:
+        total_letters += 1
+        
+        if char in vowels:
+            total_vowels += 1
+        elif char.isalpha():
+            total_cons += 1
+
+print("Total letters:", total_letters)
+print("Total words:", total_words)
+print("Largest word:", largest_word)
+print("Total Consonants:", total_cons)
+print("Total Vowels:", total_vowels)
+# print("Word frequency:", word_freq)
 
