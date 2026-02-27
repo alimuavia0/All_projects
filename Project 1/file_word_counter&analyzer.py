@@ -4,11 +4,16 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+text = input("Enter data: ")
+d =  open("data.txt", "a")
+d.write(text +"\n")
+
 current_dir = os.path.dirname(__file__)
 file_path = os.path.join(current_dir, "data.txt")
 
 with open(file_path, "r") as file:
     content = file.read().lower()
+
 
 # Extract words
 words = re.findall(r"[A-Za-z]\w*(?:\-[A-Za-z]\w*)?", content)
@@ -64,27 +69,33 @@ datas = [{
         }]
 #data into DataFrame
 data = pd.DataFrame(datas)
-print("1) barplot\n 2) boxplot\n 3) countplot\n  4) catplot\n 5) dogplot\n 6) Excit")
-atempts = 1
+print("1) Normally\n 2) In plots\n 3) Exit")
+
+q = input("Enter which you want data: ")
+atempts = 0
+if q == "1" :
+    print(data)
+elif q == "2" :
+    print("1) barplot\n 2)dogplot\n 3) Exit")
+    atempts = 1
+elif q in ("3","exit"):
+    print("Thanks for coming")
+else :
+    print("Invalid option")
 while atempts :
-    user = input("Enter which you want!: ")
-    if user == "6" :
+    user = input("Enter which you want!: ").lower()
+    print("Thanks for coming")
+    if user in ("3","exit") :
         break
     atempts += 1
-if user == "1" :
-    sns.barplot(data=data)
-    plt.show()
-elif user == "2" :
-    sns.boxplot(data=data)
-    plt.show()
-elif user == "4" :
-    sns.catplot(data=data)
-    plt.show()
-elif user == "3" :
-    sns.countplot(data=data)
-    plt.show()
-elif user == "5" :
-    sns.dogplot(data=data)
-    plt.show()
-else : 
-    print("Invalid option")
+    if user == "1" :
+        sns.barplot(data=data)
+        plt.title("The Data in Barplot")
+        plt.xlabel("Variables of data")
+        plt.show()
+    elif user == "2" :
+        sns.dogplot(data=data)
+        plt.title("The Data in Dogplot")
+        plt.show()
+    else : 
+        print("Invalid option")
