@@ -1,5 +1,8 @@
 import os
 import re
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 current_dir = os.path.dirname(__file__)
 file_path = os.path.join(current_dir, "data.txt")
@@ -42,10 +45,46 @@ for word in words:
         elif char.isalpha():
             total_cons += 1
 
-print("Total letters:", total_letters)
-print("Total words:", total_words)
-print("Largest word:", largest_word)
-print("Total Consonants:", total_cons)
-print("Total Vowels:", total_vowels)
-# print("Word frequency:", word_freq)
+# print("Total letters:", total_letters)
+# print("Total words:", total_words)
+# print("Largest word:", largest_word)
+# print("Total Consonants:", total_cons)
+# print("Total Vowels:", total_vowels)
+# # print("Word frequency:", word_freq)
 
+
+
+#data convert into row data
+datas = [{
+    'Total_letters':total_letters,
+        'Total_Consonants':total_cons,
+        'Total_Vowels':total_vowels,
+        'Total_Words':total_words,
+        'Largest_Word':largest_word,
+        }]
+#data into DataFrame
+data = pd.DataFrame(datas)
+print("1) barplot\n 2) boxplot\n 3) countplot\n  4) catplot\n 5) dogplot\n 6) Excit")
+atempts = 1
+while atempts :
+    user = input("Enter which you want!: ")
+    if user == "6" :
+        break
+    atempts += 1
+if user == "1" :
+    sns.barplot(data=data)
+    plt.show()
+elif user == "2" :
+    sns.boxplot(data=data)
+    plt.show()
+elif user == "4" :
+    sns.catplot(data=data)
+    plt.show()
+elif user == "3" :
+    sns.countplot(data=data)
+    plt.show()
+elif user == "5" :
+    sns.dogplot(data=data)
+    plt.show()
+else : 
+    print("Invalid option")
