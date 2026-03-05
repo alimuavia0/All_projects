@@ -5,18 +5,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 text = input("Enter data: ")
-d =  open("data.txt", "a")
-d.write(text +"\n")
 
-current_dir = os.path.dirname(__file__)
-file_path = os.path.join(current_dir, "data.txt")
-
-with open(file_path, "r") as file:
-    content = file.read().lower()
-
+content = text.lower()
 
 # Extract words
 words = re.findall(r"[A-Za-z]\w*(?:\-[A-Za-z]\w*)?", content)
+numbers = re.findall(r"[0-9]\d*(?:\-[0-9]\d*)?", content)
 
 total_vowels = 0
 total_cons = 0
@@ -65,7 +59,8 @@ datas = [{
         'Total_Consonants':total_cons,
         'Total_Vowels':total_vowels,
         'Total_Words':total_words,
-        'Largest_Word':largest_word,
+        'Total_Digits':len(numbers),
+        # 'Largest_Word':largest_word,
         }]
 #data into DataFrame
 data = pd.DataFrame(datas)
@@ -89,13 +84,18 @@ while atempts :
         break
     atempts += 1
     if user == "1" :
+        plt.figure(figsize=(8,5))
         sns.barplot(data=data)
         plt.title("The Data in Barplot")
-        plt.xlabel("Variables of data")
+        plt.ylabel("Counts")
+        plt.xlabel("Largest_Word:" + largest_word)
         plt.show()
     elif user == "2" :
-        sns.dogplot(data=data)
-        plt.title("The Data in Dogplot")
+        data.drop(columns=["Largest_Word"], errors="ignore")
+        values = data.iloc[0]     # first row values
+        labels = data.columns     # column names
+        plt.pie(values, labels=labels, autopct="%1.1f%%", startangle=90)
+        plt.title("Data Analysis")
         plt.show()
     else : 
         print("Invalid option")
