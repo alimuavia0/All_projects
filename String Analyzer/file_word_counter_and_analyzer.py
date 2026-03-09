@@ -71,7 +71,7 @@ atempts = 0
 if q == "1" :
     print(data)
 elif q == "2" :
-    print("1) barplot\n 2)dogplot\n 3) Exit")
+    print("1) barplot\n 2)Pieplot\n 3) Exit")
     atempts = 1
 elif q in ("3","exit"):
     print("Thanks for coming")
